@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane fx:id="settingsPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ndonald.towergame.controllers.SettingsPageController">
+    <ImageView fitHeight="600" fitWidth="1024" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0">
+            <Image url="@../assets/backgrounds/tower-defense-game-tile-set-pack-2/PNG/game_background_2(1)/game_background_2.png" />
+    </ImageView>
+    <ImageView fitHeight="313.0" fitWidth="613.0" layoutX="271.0" layoutY="144.0" pickOnBounds="true" preserveRatio="true">
+            <Image url="@../assets/td-gui/PNG/settings/table.png" />
+    </ImageView>
+    <ImageView fitHeight="129.0" fitWidth="428.0" layoutX="355.0" layoutY="135.0" pickOnBounds="true" preserveRatio="true">
+        <Image url="@../assets/td-gui/PNG/settings/header_settings.png" />
+    </ImageView>
+    <ImageView fitHeight="67.0" fitWidth="119.0" layoutX="512.0" layoutY="272.0" onMouseClicked="#OnButtonClick" pickOnBounds="true" preserveRatio="true">
+        <Image url="@../assets/td-gui/PNG/settings/button_on.png" />
+    </ImageView>
+    <ImageView fitHeight="67.0" fitWidth="119.0" layoutX="512.0" layoutY="329.0" onMouseClicked="#OnButtonClick" pickOnBounds="true" preserveRatio="true">
+        <Image url="@../assets/td-gui/PNG/settings/button_on.png" />
+    </ImageView>
+    <ImageView fitHeight="67.0" fitWidth="119.0" layoutX="704.0" layoutY="111.0" onMouseClicked="#OnExitClick" pickOnBounds="true" preserveRatio="true">
+        <Image url="@../assets/td-gui/PNG/settings/button_close.png" />
+    </ImageView>
+   <Label layoutX="395.0" layoutY="339.0" prefHeight="37.0" prefWidth="100.0" text="Sound" textFill="#ebdf75">
+      <font>
+         <Font size="30.0" />
+      </font>
+   </Label>
+   <Label layoutX="395.0" layoutY="282.0" text="Music" textFill="#ebdf75">
+      <font>
+         <Font name="Fira Code Regular" size="30.0" />
+      </font>
+   </Label>
+</AnchorPane>
