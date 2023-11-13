@@ -15,10 +15,10 @@
     <ImageView fitHeight="129.0" fitWidth="428.0" layoutX="355.0" layoutY="135.0" pickOnBounds="true" preserveRatio="true">
         <Image url="@../assets/td-gui/PNG/settings/header_settings.png" />
     </ImageView>
-    <ImageView fitHeight="67.0" fitWidth="119.0" layoutX="512.0" layoutY="272.0" onMouseClicked="#OnButtonClick" pickOnBounds="true" preserveRatio="true">
+    <ImageView fitHeight="67.0" fitWidth="119.0" layoutX="512.0" layoutY="272.0" onMouseClicked="#OnMusicButtonClick" pickOnBounds="true" preserveRatio="true">
         <Image url="@../assets/td-gui/PNG/settings/button_on.png" />
     </ImageView>
-    <ImageView fitHeight="67.0" fitWidth="119.0" layoutX="512.0" layoutY="329.0" onMouseClicked="#OnButtonClick" pickOnBounds="true" preserveRatio="true">
+    <ImageView fitHeight="67.0" fitWidth="119.0" layoutX="512.0" layoutY="329.0" onMouseClicked="#OnSoundsButtonClick" pickOnBounds="true" preserveRatio="true">
         <Image url="@../assets/td-gui/PNG/settings/button_on.png" />
     </ImageView>
     <ImageView fitHeight="67.0" fitWidth="119.0" layoutX="704.0" layoutY="111.0" onMouseClicked="#OnExitClick" pickOnBounds="true" preserveRatio="true">

@@ -17,19 +17,12 @@ import java.util.ResourceBundle;
 public class MainPageController{
     @FXML
     public AnchorPane mainRoot;
-    @FXML
-    public void onButtonHover(MouseEvent mouseEvent) {
-        // change cursor to pointer, resize effect??
-    }
 
     @FXML
-    public void onButtonHoverExit(MouseEvent mouseEvent) {
-        // change cursor to pointer
-    }
-
-    @FXML
-    public void onPlayButtonClick(MouseEvent mouseEvent){
-        // start game
+    public void onPlayButtonClick(MouseEvent mouseEvent) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("views/MainGame.fxml"));
+        AnchorPane pane = fxmlLoader.load();
+        mainRoot.getChildren().setAll(pane);
     }
 
     @FXML

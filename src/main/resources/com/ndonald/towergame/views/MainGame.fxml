@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane fx:id="anchor" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ndonald.towergame.controllers.GameController">
+    <ImageView fitHeight="600" fitWidth="1024" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0">
+        <Image url="@../assets/backgrounds/tower-defense-game-tile-set-pack-2/PNG/game_background_2(1)/game_background_2.png" />
+    </ImageView>
+    <ImageView fitHeight="52.0" fitWidth="71.0" layoutX="957.0" layoutY="534.0" onMouseClicked="#onSettingsButtonClick" pickOnBounds="true" preserveRatio="true">
+        <Image url="@../assets/td-gui/PNG/menu/button_settings.png" />
+    </ImageView>
+</AnchorPane>

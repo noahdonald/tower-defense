@@ -13,12 +13,12 @@
         <Image url="@../assets/td-gui/PNG/menu/logo.png"/>
     </ImageView>
     <ImageView fitHeight="171.0" fitWidth="152.0" layoutX="436.0" layoutY="300.0" onMouseClicked="#onPlayButtonClick"
-               onMouseEntered="#onButtonHover" onMouseExited="#onButtonHoverExit" pickOnBounds="true"
+               pickOnBounds="true"
                preserveRatio="true">
         <Image url="@../assets/td-gui/PNG/menu/button_play.png"/>
     </ImageView>
     <ImageView fitHeight="52.0" fitWidth="71.0" layoutX="957.0" layoutY="534.0" onMouseClicked="#onSettingsButtonClick"
-               onMouseEntered="#onButtonHover" onMouseExited="#onButtonHoverExit" pickOnBounds="true"
+               pickOnBounds="true"
                preserveRatio="true">
         <Image url="@../assets/td-gui/PNG/menu/button_settings.png"/>
     </ImageView>

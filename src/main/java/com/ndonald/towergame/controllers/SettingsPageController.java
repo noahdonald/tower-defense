@@ -15,15 +15,35 @@ import java.util.Objects;
 
 public class SettingsPageController {
     public AnchorPane settingsPane;
+    boolean musicOn = true;
+    boolean soundsOn = true;
 
-    public void OnButtonClick(MouseEvent mouseEvent) {
+
+    public void OnMusicButtonClick(MouseEvent mouseEvent) {
         //This doesn't work
         ImageView image = (ImageView)mouseEvent.getSource();
-        if (Objects.equals(image.getImage().getUrl(), "@assets/td-gui/PNG/settings/button_on.png")){
-            image.setImage(new Image("@assets/td-gui/PNG/settings/button_off.png"));
+        if (musicOn){
+            image.setImage(new Image("com/ndonald/towergame/assets/td-gui/PNG/settings/button_off.png"));
+            musicOn = false;
         }
         else{
-            image.setImage(new Image("@assets/td-gui/PNG/settings/button_on.png"));
+            image.setImage(new Image("com/ndonald/towergame/assets/td-gui/PNG/settings/button_on.png"));
+            musicOn = true;
+            //functionality is needed later to actually add the music
+        }
+    }
+
+    public void OnSoundsButtonClick(MouseEvent mouseEvent) {
+        //This doesn't work
+        ImageView image = (ImageView)mouseEvent.getSource();
+        if (soundsOn){
+            image.setImage(new Image("com/ndonald/towergame/assets/td-gui/PNG/settings/button_off.png"));
+            soundsOn = false;
+        }
+        else{
+            image.setImage(new Image("com/ndonald/towergame/assets/td-gui/PNG/settings/button_on.png"));
+            soundsOn = true;
+            //functionality is needed later to actually add the music
         }
     }
 
