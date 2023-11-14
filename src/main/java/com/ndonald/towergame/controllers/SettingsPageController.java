@@ -1,6 +1,8 @@
 package com.ndonald.towergame.controllers;
 
 import com.ndonald.towergame.Main;
+import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -51,5 +53,9 @@ public class SettingsPageController {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("views/MainPage.fxml"));
         AnchorPane pane = fxmlLoader.load();
         settingsPane.getChildren().setAll(pane);
+    }
+
+    public void OnQuitButtonClick(MouseEvent mouseEvent) {
+        Platform.exit();
     }
 }

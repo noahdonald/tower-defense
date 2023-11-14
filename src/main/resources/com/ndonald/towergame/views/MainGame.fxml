@@ -10,4 +10,10 @@
     <ImageView fitHeight="52.0" fitWidth="71.0" layoutX="957.0" layoutY="534.0" onMouseClicked="#onSettingsButtonClick" pickOnBounds="true" preserveRatio="true">
         <Image url="@../assets/td-gui/PNG/menu/button_settings.png" />
     </ImageView>
+    <ImageView fitHeight="60.0" fitWidth="73.0" layoutX="939.0" layoutY="11.0" onMouseClicked="#onTowerButtonClick" pickOnBounds="true" preserveRatio="true">
+        <Image url="@../assets/td-gui/PNG/menu/window.png" />
+    </ImageView>
+    <ImageView fitHeight="52.0" fitWidth="491.0" layoutX="958.0" layoutY="14.0" onMouseClicked="#onTowerButtonClick" pickOnBounds="true" preserveRatio="true">
+        <Image url="@../assets/sprites/stone-tower-game-assets/PNG/Stones_Tower.png" />
+    </ImageView>
 </AnchorPane>

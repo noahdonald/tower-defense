@@ -1,5 +1,6 @@
 package com.ndonald.towergame.models;
 
+import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
@@ -16,6 +17,8 @@ public class BasicEnemy {
     protected boolean isMoving = true;
 
     public float walkingTime = 0;
+
+    Node n;
 
     public static Image[] sprites = {
                 new Image("com/ndonald/towergame/assets/sprites/monster-enemy-game-sprites/PNG/1/1_enemies_1_walk_000.png"),
@@ -79,8 +82,16 @@ public class BasicEnemy {
         return x;
     }
 
+    public void setX(int x){
+        this.x = x;
+    }
+
     public int getY() {
         return y;
+    }
+
+    public void setY(int y){
+        this.y = y;
     }
 
     public boolean getIsMoving() {
@@ -91,5 +102,12 @@ public class BasicEnemy {
         isMoving = _isMoving;
     }
 
+    public void setNode(Node n){
+        this.n = n;
+    }
+
+    public Node getNode(){
+        return n;
+    }
 }
 

@@ -16,13 +16,12 @@ public class BasicTower {
 
     protected boolean isShot = false;
 
-    protected ImageView imageView = null;
-
     public static int _attackPower = 3;
 
-    public static int _range = 65;
+    public static int _range = 100;
 
-    public static String _imagePath = "";
+    public String _imagePath = "com/ndonald/towergame/assets/sprites/stone-tower-game-assets/PNG/Stones_Tower.png";
+    public String _shotImagePath = "com/ndonald/towergame/assets/sprites/stone-tower-game-assets/PNG/Shot.png";
 
     public BasicTower(int _x, int _y) {
         x = _x;
@@ -30,8 +29,6 @@ public class BasicTower {
 
         attackPower = _attackPower;
         range = _range;
-
-        setImageView(_imagePath);
     }
 
     public boolean isInRange(BasicEnemy m) {
@@ -42,25 +39,11 @@ public class BasicTower {
         return range > Math.sqrt(Math.pow(x-_x, 2)+Math.pow(y-_y, 2));
     }
 
-    public boolean shoot(BasicEnemy m, Arena a) {
-        if (isShot != true)
+    public boolean shoot(BasicEnemy m) {
+        if (!isShot)
             m.setHp(m.getHp() - attackPower);
 
         return true;
-    }
-
-    public void setImageView(String _imagePath) {
-        Image image = null;
-
-        try {
-            image = new Image(new FileInputStream(_imagePath));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        if (image != null) {
-            imageView = new ImageView(image);
-        }
     }
 
     public int getX() {
@@ -77,10 +60,6 @@ public class BasicTower {
 
     public int getRange() {
         return range;
-    }
-
-    public ImageView getImageView() {
-        return imageView;
     }
 
     public String getTowerType() {

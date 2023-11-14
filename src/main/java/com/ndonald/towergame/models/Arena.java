@@ -1,42 +1,23 @@
 package com.ndonald.towergame.models;
 
+import com.ndonald.towergame.controllers.GameController;
+import javafx.animation.AnimationTimer;
+
 import java.util.ArrayList;
 import java.util.Random;
 
-public class Arena {
-    private int time;
+public class Arena extends AnimationTimer {
+    GameController c;
 
-    private int numOfColumn;
-
-    private int numOfRow;
-
-    private boolean [][] isGreen;
-
-    public boolean isValidArena;
-
-    public ArrayList<BasicEnemy> enemies;
-    public ArrayList <BasicTower> towers;
-
-    public static Random rand = new Random();
-
-    public Arena() {
-        this.numOfColumn = numOfColumn;
-        this.numOfRow = numOfRow;
-
-        time = 0;
-
-        isValidArena = true;
-
-        enemies = new ArrayList<BasicEnemy>(0);
+    public Arena(GameController _c) {
+        c = _c;
     }
 
-        public void addEnemy(BasicEnemy newEnemy) {
-            enemies.add(newEnemy);
-        }
+    @Override
+    public void handle(long l) {
+        c.checkRanges();
+        c.updatePostions();
+    }
 
-        public void removeEnemy(BasicEnemy enemy) {
-            boolean removeSuccess =  enemies.remove(enemy);
-            if(!removeSuccess)
-                System.out.println("ERROR: Monster Removal");
-        }
+
 }
