@@ -15,7 +15,6 @@ public class Arena extends AnimationTimer {
 
     @Override
     public void handle(long l) {
-        c.checkRanges();
         c.updatePostions();
     }
 

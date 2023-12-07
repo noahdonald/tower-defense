@@ -2,9 +2,12 @@ package com.ndonald.towergame.controllers;
 
 import com.ndonald.towergame.Main;
 import com.ndonald.towergame.models.BasicTower;
+import com.ndonald.towergame.models.Player;
 import com.ndonald.towergame.models.WalkAnimation;
 import com.ndonald.towergame.models.Arena;
 import com.ndonald.towergame.models.BasicEnemy;
+import com.ndonald.towergame.net.GameClient;
+import com.ndonald.towergame.net.GameServer;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.PathTransition;
@@ -31,19 +34,21 @@ public class GameController {
 
     @FXML
     public AnchorPane anchor;
-    ArrayList<BasicTower> towers;
-    ArrayList<BasicEnemy> enemies;
-    ArrayList<Node> nodes;
+    ArrayList<BasicTower> towers  = new ArrayList<BasicTower>();
+    ArrayList<BasicEnemy> enemies  = new ArrayList<BasicEnemy>(0);
     int enemyX, enemyY = 200;
     Timer enemyTimer;
     Arena arena;
+    Player player;
+    GameServer socketServer;
+    GameClient socketClient;
 
     public GameController(){
         arena = new Arena(this);
         arena.start();
-        enemies = new ArrayList<BasicEnemy>(0);
-        towers = new ArrayList<BasicTower>();
-        nodes = new ArrayList<Node>();
+        if (socketServer != null){
+            socketServer.start();
+        }
         enemyTimer = new Timer();
         enemyTimer.scheduleAtFixedRate(
                 new TimerTask() {
@@ -53,20 +58,19 @@ public class GameController {
         }, 5000,10000);
     }
 
-    public void checkRanges(){
-        for (BasicTower t:towers){
-            for(Node n:nodes){
-                if (t.isInRange((int) n.getLayoutX(), (int) n.getLayoutY())){
-                    shoot(t,n);
-                }
+    public void checkRange(BasicTower t){
+        for(BasicEnemy e:enemies){
+            if (t.isInRange((int) e.getX(), (int) e.getY())){
+                shoot(t,e);
+                return;
             }
         }
     }
 
     public void updatePostions(){
         for (BasicEnemy e:enemies){
-            e.setX((int) (e.getX() + e.getNode().getTranslateX()));
-            e.setY((int) (e.getY() + e.getNode().getTranslateY()));
+            e.setX((int) (e.getNode().getTranslateX()));
+            e.setY((int) (e.getNode().getTranslateY()));
         }
     }
 
@@ -78,6 +82,7 @@ public class GameController {
 
     void drawEnemy(int x, int y, BasicEnemy enemy){
         ImageView imageView = new ImageView(enemy.animation.getKeyFrame(enemy.walkingTime, WalkAnimation.ANIMATION_LOOPING));
+        enemy.setView(imageView);
         imageView.setFitHeight(100);
         imageView.setFitWidth(100);
 
@@ -99,11 +104,7 @@ public class GameController {
         path.getElements().add(new LineTo(1500,150));
         PathTransition transition = new PathTransition();
         transition.setNode(imageView);
-
         enemy.setNode(transition.getNode());
-        //nodes.add(transition.getNode());
-
-
         transition.setDuration(Duration.seconds(60));
         transition.setPath(path);
         transition.setCycleCount(1);
@@ -114,6 +115,12 @@ public class GameController {
         BasicTower t = new BasicTower(420,345);
         addTower(t);
         drawTower(t);
+        t.timer.scheduleAtFixedRate(
+                new TimerTask() {
+                    public void run() {
+                        Platform.runLater(() -> checkRange(t));
+                    }
+                }, 0,2000);
     }
 
     void drawTower(BasicTower t){
@@ -132,22 +139,28 @@ public class GameController {
         anchor.getChildren().addAll(imageView,shotImageView);
     }
 
-    void shoot(BasicTower t, Node n){
+    void shoot(BasicTower t, BasicEnemy e) {
         ImageView shotImageView = new ImageView(new Image(t._shotImagePath));
         shotImageView.setFitWidth(25);
         shotImageView.setFitHeight(25);
-        //shotImageView.setX(t.getX()+25);
-        //shotImageView.setY(t.getY()-20);
         shotImageView.setPreserveRatio(true);
         anchor.getChildren().addAll(shotImageView);
         Path path = new Path();
-        path.getElements().add(new MoveTo(t.getX()+25,t.getY()-20));
-        path.getElements().add(new LineTo(n.getTranslateX(),n.getTranslateY()));
+        path.getElements().add(new MoveTo(t.getX() + 25, t.getY() - 20));
+        path.getElements().add(new LineTo(e.n.getBoundsInParent().getCenterX(), e.n.getBoundsInParent().getCenterY()));
         PathTransition transition = new PathTransition();
         transition.setNode(shotImageView);
-        transition.setDuration(Duration.seconds(2));
+        transition.setDuration(Duration.seconds(0.3));
         transition.setPath(path);
         transition.setCycleCount(1);
+        transition.setOnFinished(event -> {
+            shotImageView.setVisible(false);
+            e.setHp(e.getHp()-5);
+            if (e.getHp() <= 0) {
+                e.getView().setVisible(false);
+                enemies.remove(e);
+            }
+        });
         transition.play();
     }
 
@@ -179,5 +192,16 @@ public class GameController {
         boolean removeSuccess =  enemies.remove(tower);
         if(!removeSuccess)
             System.out.println("ERROR: tower Removal");
+    }
+
+    public void setPlayer(Player p){
+        player = p;
+    }
+    public void setServer(GameServer s){
+        socketServer = s;
+    }
+
+    public void setClient(GameClient c){
+        socketClient = c;
     }
 }

@@ -34,7 +34,7 @@
          <Font name="Fira Code Regular" size="30.0" />
       </font>
    </Label>
-   <Label layoutX="477.0" layoutY="401.0" text="Quit Game" onMouseClicked="#OnQuitButtonClick" textFill="#ebdf75">
+   <Label layoutX="429.0" layoutY="386.0" onMouseClicked="#OnQuitButtonClick" text="Quit Game" textFill="#ebdf75">
       <font>
          <Font name="Fira Code Regular" size="30.0" />
       </font>

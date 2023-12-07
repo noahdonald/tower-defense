@@ -1,14 +1,18 @@
 package com.ndonald.towergame.models;
 
+import javafx.application.Platform;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class BasicTower {
 
     protected int x, y;
+
 
     protected int attackPower;
 
@@ -18,7 +22,9 @@ public class BasicTower {
 
     public static int _attackPower = 3;
 
-    public static int _range = 100;
+    public static int _range = 200;
+
+    public Timer timer;
 
     public String _imagePath = "com/ndonald/towergame/assets/sprites/stone-tower-game-assets/PNG/Stones_Tower.png";
     public String _shotImagePath = "com/ndonald/towergame/assets/sprites/stone-tower-game-assets/PNG/Shot.png";
@@ -29,6 +35,7 @@ public class BasicTower {
 
         attackPower = _attackPower;
         range = _range;
+        timer = new Timer();
     }
 
     public boolean isInRange(BasicEnemy m) {

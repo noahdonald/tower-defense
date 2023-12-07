@@ -8,7 +8,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
 public class BasicEnemy {
-    protected int hp = 300 ;
+    protected int hp = 25 ;
 
     protected int speed = 3;
 
@@ -18,7 +18,8 @@ public class BasicEnemy {
 
     public float walkingTime = 0;
 
-    Node n;
+    public Node n;
+    public ImageView v;
 
     public static Image[] sprites = {
                 new Image("com/ndonald/towergame/assets/sprites/monster-enemy-game-sprites/PNG/1/1_enemies_1_walk_000.png"),
@@ -108,6 +109,14 @@ public class BasicEnemy {
 
     public Node getNode(){
         return n;
+    }
+
+    public void setView(ImageView v){
+        this.v = v;
+    }
+
+    public ImageView getView(){
+        return v;
     }
 }
 

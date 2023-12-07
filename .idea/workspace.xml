@@ -5,17 +5,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c93e81be-7b93-4fc2-978e-7d7f7969b13a" name="Changes" comment="settings page built, pane transitions">
-      <change afterPath="$PROJECT_DIR$/src/main/resources/com/ndonald/towergame/assets/sprites/stone-tower-game-assets/PNG/Shot.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/com/ndonald/towergame/assets/sprites/stone-tower-game-assets/PNG/Stones_Tower.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/com/ndonald/towergame/assets/td-gui/PNG/menu/window.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/ndonald/towergame/models/Player.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/ndonald/towergame/net/GameClient.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/ndonald/towergame/net/GameServer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/ndonald/towergame/net/Packet.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/ndonald/towergame/net/Packet00Login.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/com/ndonald/towergame/views/UsernamePopup.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/ndonald/towergame/controllers/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ndonald/towergame/controllers/GameController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ndonald/towergame/controllers/SettingsPageController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ndonald/towergame/controllers/SettingsPageController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ndonald/towergame/controllers/MainPageController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ndonald/towergame/controllers/MainPageController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/ndonald/towergame/models/Arena.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ndonald/towergame/models/Arena.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/ndonald/towergame/models/BasicEnemy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ndonald/towergame/models/BasicEnemy.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/ndonald/towergame/models/BasicTower.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ndonald/towergame/models/BasicTower.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ndonald/towergame/models/TowerImageView.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/ndonald/towergame/views/MainGame.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/ndonald/towergame/views/MainGame.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/com/ndonald/towergame/views/SettingsPage.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/ndonald/towergame/views/SettingsPage.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -27,13 +29,20 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="CSS File" />
-        <option value="FxmlFile" />
         <option value="Class" />
+        <option value="FxmlFile" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHome" value="Use Maven wrapper" />
+      </MavenGeneralSettings>
+    </option>
   </component>
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="ProjectErrors" />
@@ -47,17 +56,19 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Application.Main.executor": "Debug",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
     "git-widget-placeholder": "main",
-    "last_opened_file_path": "/home/noahd/IdeaProjects/tower-defense/src/main/resources/com/ndonald/towergame/assets/sprites/stone-tower-game-assets/PNG",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/home/noahd/IdeaProjects/tower-defense",
     "list.type.of.created.stylesheet": "CSS",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
-    "settings.editor.selected.configurable": "project.scopes",
+    "settings.editor.selected.configurable": "reference.settings.project.maven.repository.indices",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -79,7 +90,7 @@
     </key>
   </component>
   <component name="RunManager">
-    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+    <configuration name="Main" type="Application" factoryName="Application" singleton="false" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.ndonald.towergame.Main" />
       <module name="TowerGame" />
       <extension name="coverage">
@@ -92,11 +103,19 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <recent_temporary>
-      <list>
-        <item itemvalue="Application.Main" />
-      </list>
-    </recent_temporary>
+    <configuration default="true" type="Application" factoryName="Application" singleton="false">
+      <module name="TowerGame" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="jdk-21.0.1-openjdk-21.0.1-8336523bb0d9-cc9f59e6" />
+      </set>
+    </attachedChunks>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -136,16 +155,5 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="settings page built, pane transitions" />
     <option name="LAST_COMMIT_MESSAGE" value="settings page built, pane transitions" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/ndonald/towergame/models/BasicTower.java</url>
-          <line>38</line>
-          <option name="timeStamp" value="7" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>
