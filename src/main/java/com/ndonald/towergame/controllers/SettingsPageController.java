@@ -1,6 +1,9 @@
 package com.ndonald.towergame.controllers;
 
 import com.ndonald.towergame.Main;
+import com.ndonald.towergame.models.Observable;
+import com.ndonald.towergame.net.GameClient;
+import com.ndonald.towergame.net.Packet01Disconnect;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -15,11 +18,10 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.Objects;
 
-public class SettingsPageController {
+public class SettingsPageController{
     public AnchorPane settingsPane;
     boolean musicOn = true;
     boolean soundsOn = true;
-
 
     public void OnMusicButtonClick(MouseEvent mouseEvent) {
         //This doesn't work
@@ -58,4 +60,5 @@ public class SettingsPageController {
     public void OnQuitButtonClick(MouseEvent mouseEvent) {
         Platform.exit();
     }
+
 }

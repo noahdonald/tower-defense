@@ -80,4 +80,9 @@ public class BasicTower {
     public void setIsShot(boolean _isShot) {
         isShot = _isShot;
     }
+
+    @Override
+    public String toString() {
+        return  x + "," + y;
+    }
 }

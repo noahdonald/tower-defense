@@ -1,13 +1,9 @@
 package com.ndonald.towergame.controllers;
-
 import com.ndonald.towergame.Main;
-import com.ndonald.towergame.models.BasicTower;
-import com.ndonald.towergame.models.Player;
-import com.ndonald.towergame.models.WalkAnimation;
-import com.ndonald.towergame.models.Arena;
-import com.ndonald.towergame.models.BasicEnemy;
+import com.ndonald.towergame.models.*;
 import com.ndonald.towergame.net.GameClient;
 import com.ndonald.towergame.net.GameServer;
+import com.ndonald.towergame.net.Packet02Tower;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.PathTransition;
@@ -15,40 +11,50 @@ import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
+import javafx.scene.control.Label;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.input.*;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.LineTo;
 import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
 import javafx.util.Duration;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class GameController {
+public class GameController extends Observable {
 
     @FXML
     public AnchorPane anchor;
-    ArrayList<BasicTower> towers  = new ArrayList<BasicTower>();
-    ArrayList<BasicEnemy> enemies  = new ArrayList<BasicEnemy>(0);
+    public Label scoreboard;
+    public Label timerLabel;
+    private double startDragX;
+    private double startDragY;
+    public ArrayList<BasicTower> towers;
+    public ArrayList<BasicEnemy> enemies;
     int enemyX, enemyY = 200;
-    Timer enemyTimer;
+    public Timer enemyTimer;
+    public int points = 0;
     Arena arena;
-    Player player;
+    public Player player;
+    Player opp;
     GameServer socketServer;
-    GameClient socketClient;
+    public GameClient socketClient;
 
+    private int towerDelay = 15;
+
+    private boolean canBuild = true;
     public GameController(){
+        towers = new ArrayList<BasicTower>();
+        enemies = new ArrayList<BasicEnemy>();
         arena = new Arena(this);
         arena.start();
-        if (socketServer != null){
-            socketServer.start();
-        }
         enemyTimer = new Timer();
         enemyTimer.scheduleAtFixedRate(
                 new TimerTask() {
@@ -109,21 +115,35 @@ public class GameController {
         transition.setPath(path);
         transition.setCycleCount(1);
         transition.play();
+        transition.setOnFinished(event -> {
+            enemies.remove(enemy);
+            points -= 5;
+        });
     }
 
-    void createTower(){
-        BasicTower t = new BasicTower(420,345);
-        addTower(t);
-        drawTower(t);
-        t.timer.scheduleAtFixedRate(
-                new TimerTask() {
-                    public void run() {
-                        Platform.runLater(() -> checkRange(t));
-                    }
-                }, 0,2000);
+    public void sendTower(BasicTower t){
+        Packet02Tower packet = new Packet02Tower(this,t.toString());
+        packet.writeData(socketClient);
     }
 
-    void drawTower(BasicTower t){
+    public void createTower(BasicTower t){
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                addTower(t);
+                drawTower(t);
+                t.timer.scheduleAtFixedRate(
+                        new TimerTask() {
+                            public void run() {
+                                Platform.runLater(() -> checkRange(t));
+                            }
+                        }, 0,2000);
+            }
+        });
+
+    }
+
+    private void drawTower(BasicTower t){
         ImageView imageView = new ImageView(new Image(t._imagePath));
         ImageView shotImageView = new ImageView(new Image(t._shotImagePath));
         imageView.setFitHeight(100);
@@ -139,7 +159,7 @@ public class GameController {
         anchor.getChildren().addAll(imageView,shotImageView);
     }
 
-    void shoot(BasicTower t, BasicEnemy e) {
+    private void shoot(BasicTower t, BasicEnemy e) {
         ImageView shotImageView = new ImageView(new Image(t._shotImagePath));
         shotImageView.setFitWidth(25);
         shotImageView.setFitHeight(25);
@@ -158,7 +178,8 @@ public class GameController {
             e.setHp(e.getHp()-5);
             if (e.getHp() <= 0) {
                 e.getView().setVisible(false);
-                enemies.remove(e);
+                removeEnemy(e);
+                points += 5;
             }
         });
         transition.play();
@@ -170,28 +191,16 @@ public class GameController {
         anchor.getChildren().setAll(pane);
     }
 
-    public void onTowerButtonClick(MouseEvent mouseEvent) {
-        createTower();
-    }
-
     public void addEnemy(BasicEnemy newEnemy) {
         enemies.add(newEnemy);
     }
 
     public void removeEnemy(BasicEnemy enemy) {
-        boolean removeSuccess =  enemies.remove(enemy);
-        if(!removeSuccess)
-            System.out.println("ERROR: Monster Removal");
+        enemies.remove(enemy);
     }
 
     public void addTower(BasicTower newTower) {
         towers.add(newTower);
-    }
-
-    public void removeTower(BasicTower tower) {
-        boolean removeSuccess =  enemies.remove(tower);
-        if(!removeSuccess)
-            System.out.println("ERROR: tower Removal");
     }
 
     public void setPlayer(Player p){
@@ -203,5 +212,61 @@ public class GameController {
 
     public void setClient(GameClient c){
         socketClient = c;
+    }
+
+    @Override
+    public String getUsername() {
+        return player.getUsername();
+    }
+
+    @Override
+    public GameClient getClient() {
+        return socketClient;
+    }
+
+    public void startdrag(MouseEvent e) {
+        if (canBuild) {
+            e.setDragDetect(true);
+            ImageView image = (ImageView) e.getSource();
+            image.setEffect(new DropShadow());
+        }
+    }
+
+    public void enddrag(MouseEvent e) {
+        if (canBuild) {
+            ImageView image = (ImageView) e.getSource();
+            image.setEffect(null);
+            createTower(new BasicTower((int) e.getSceneX(), (int) e.getSceneY()));
+            sendTower(new BasicTower((int) e.getSceneX(), (int) e.getSceneY()));
+            canBuild = false;
+            timerLabel.setVisible(true);
+            Timer timer = new Timer();
+            timer.scheduleAtFixedRate(
+                    new TimerTask() {
+                        public void run() {
+                            Platform.runLater(() ->
+                            {
+                                if (towerDelay > 0) {
+                                    timerLabel.setText(Integer.toString(towerDelay));
+                                    towerDelay--;
+                                } else {
+                                    timerLabel.setVisible(false);
+                                    towerDelay = 15;
+                                    timerLabel.setText("15");
+                                    canBuild = true;
+                                    cancel();
+                                }
+                            });
+                        }
+                    }, 0,1000);
+        }
+    }
+
+    public ArrayList<BasicTower> getTowers(){
+        return towers;
+    }
+
+    public ArrayList<BasicEnemy> getEnemies(){
+        return enemies;
     }
 }

@@ -1,14 +1,15 @@
 package com.ndonald.towergame.net;
 
-public class Packet00Login extends Packet{
+public class Packet01Disconnect extends Packet{
     private String username;
-    public Packet00Login(byte[] data){
-        super(00);
-        String[] dataArray = readData(data).split(",");
-        this.username = dataArray[0];
+
+    public Packet01Disconnect(byte[] data) {
+        super(01);
+        this.username = readData(data);
     }
-    public Packet00Login(String username){
-        super(00);
+
+    public Packet01Disconnect(String username) {
+        super(01);
         this.username = username;
     }
 
@@ -24,10 +25,10 @@ public class Packet00Login extends Packet{
 
     @Override
     public byte[] getData() {
-        return ("00" + this.username).getBytes();
+        return ("01" + this.username).getBytes();
     }
 
-    public String getUsername(){
+    public String getUsername() {
         return username;
     }
 }

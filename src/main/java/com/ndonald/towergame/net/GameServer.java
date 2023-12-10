@@ -1,7 +1,8 @@
 package com.ndonald.towergame.net;
 
 import com.ndonald.towergame.controllers.GameController;
-import com.ndonald.towergame.controllers.MainPageController;
+import com.ndonald.towergame.models.BasicTower;
+import com.ndonald.towergame.models.Observable;
 import com.ndonald.towergame.models.Player;
 
 import java.io.IOException;
@@ -11,13 +12,13 @@ import java.util.List;
 
 public class GameServer extends Thread{
     private DatagramSocket socket;
-    private MainPageController game;
+    private Observable game;
     private List<Player> connectedPlayers = new ArrayList<Player>();
 
-    public GameServer(MainPageController game) {
+    public GameServer(Observable game) {
         this.game = game;
         try{
-            socket = new DatagramSocket(1331);
+            this.socket = new DatagramSocket(1331);
         } catch (SocketException e){
             e.printStackTrace();
         }
@@ -38,7 +39,7 @@ public class GameServer extends Thread{
 
     private void parsePacket(byte[] data, InetAddress ipAddress, int port){
         String message = new String(data).trim();
-        Packet.PacketTypes type = Packet.lookupPacket(Integer.parseInt(message.substring(0,2)));
+        Packet.PacketTypes type = Packet.lookupPacket(message.substring(0,2));
         Packet packet = null;
         switch(type){
             default:
@@ -46,12 +47,27 @@ public class GameServer extends Thread{
                 break;
             case LOGIN:
                 packet = new Packet00Login(data);
-                System.out.println("[" + ipAddress.getHostAddress() + ":" + port + "]" + ((Packet00Login) packet).getUsername() + "has connected...");
+                System.out.println("[" + ipAddress.getHostAddress() + ":" + port + "] "
+                        + ((Packet00Login) packet).getUsername() + " has connected...");
                 Player player = new Player(((Packet00Login) packet).getUsername(), ipAddress,port);
                 this.addConnection(player,(Packet00Login) packet);
                 break;
             case DISCONNECT:
+                packet = new Packet01Disconnect(data);
+                System.out.println("[" + ipAddress.getHostAddress() + ":" + port + "] "
+                        + ((Packet01Disconnect) packet).getUsername() + " has left...");
+                this.removeConnection((Packet01Disconnect) packet);
                 break;
+            case TOWER:
+                packet = new Packet02Tower(data);
+                this.handleTower((Packet02Tower)packet);
+                break;
+        }
+    }
+
+    private void handleTower(Packet02Tower packet) {
+        if (getPlayer(packet.getUsername()) != null) {
+            packet.writeData(this);
         }
     }
 
@@ -71,24 +87,54 @@ public class GameServer extends Thread{
                 packet = new Packet00Login(p.getUsername());
                 sendData(packet.getData(), player.ipAddress, player.port);
             }
-            if (!alreadyConnected){
-                this.connectedPlayers.add(player);
-            }
+        }
+        if (!alreadyConnected){
+            this.connectedPlayers.add(player);
         }
     }
 
-    public void sendData(byte[] data, InetAddress ipAddress, int port){
+    public void removeConnection(Packet01Disconnect packet) {
+        this.connectedPlayers.remove(getPlayerIndex(packet.getUsername()));
+        packet.writeData(this);
+    }
+
+    public Player getPlayer(String username) {
+        for (Player player : this.connectedPlayers) {
+            if (player.getUsername().equals(username)) {
+                return player;
+            }
+        }
+        return null;
+    }
+
+    public int getPlayerIndex(String username) {
+        int index = 0;
+        for (Player player : this.connectedPlayers) {
+            if (player.getUsername().equals(username)) {
+                break;
+            }
+            index++;
+        }
+        return index;
+    }
+
+    public void sendData(byte[] data, InetAddress ipAddress, int port) {
         DatagramPacket packet = new DatagramPacket(data, data.length, ipAddress, port);
         try {
-            socket.send(packet);
-        } catch (Exception e){
+            this.socket.send(packet);
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public void sendDataToAllClients(byte[] data){
-        for (Player p:connectedPlayers){
+    public void sendDataToAllClients(byte[] data) {
+        for (Player p : connectedPlayers) {
             sendData(data, p.ipAddress, p.port);
         }
+    }
+
+
+    public void setObservable(Observable c){
+        game = c;
     }
 }

@@ -2,47 +2,48 @@ package com.ndonald.towergame.net;
 
 public abstract class Packet {
 
-    public static enum PacketTypes{
-        INVALID(-1), LOGIN(00), DISCONNECT(01);
+    public static enum PacketTypes {
+        INVALID(-1), LOGIN(00), DISCONNECT(01), TOWER(02);
 
-        private int packetId;
+        private final int packetId;
 
-        private PacketTypes(int PacketId){
+        private PacketTypes(int packetId) {
             this.packetId = packetId;
         }
 
-        public int getId(){
+        public int getId() {
             return packetId;
         }
     }
 
     public byte packetId;
 
-    public Packet(int packetId){
+    public Packet(int packetId) {
         this.packetId = (byte) packetId;
     }
 
     public abstract void writeData(GameClient client);
+
     public abstract void writeData(GameServer server);
 
-    public String readData(byte[] data){
+    public String readData(byte[] data) {
         String message = new String(data).trim();
         return message.substring(2);
     }
 
     public abstract byte[] getData();
 
-    public static PacketTypes lookopPacket(String packetId){
-        try{
+    public static PacketTypes lookupPacket(String packetId) {
+        try {
             return lookupPacket(Integer.parseInt(packetId));
-        }catch(NumberFormatException e){
+        } catch (NumberFormatException e) {
             return PacketTypes.INVALID;
         }
     }
 
-    public static PacketTypes lookupPacket(int id){
-        for (PacketTypes p:PacketTypes.values()){
-            if (p.getId() == id){
+    public static PacketTypes lookupPacket(int id) {
+        for (PacketTypes p : PacketTypes.values()) {
+            if (p.getId() == id) {
                 return p;
             }
         }

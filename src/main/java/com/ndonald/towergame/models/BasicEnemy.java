@@ -118,5 +118,10 @@ public class BasicEnemy {
     public ImageView getView(){
         return v;
     }
+
+    @Override
+    public String toString() {
+        return  hp + "-" + x + "-" + y + ";";
+    }
 }
 

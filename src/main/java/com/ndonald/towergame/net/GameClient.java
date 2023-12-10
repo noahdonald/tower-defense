@@ -2,6 +2,8 @@ package com.ndonald.towergame.net;
 
 import com.ndonald.towergame.controllers.GameController;
 import com.ndonald.towergame.controllers.MainPageController;
+import com.ndonald.towergame.models.BasicTower;
+import com.ndonald.towergame.models.Observable;
 import com.ndonald.towergame.models.Player;
 
 import java.io.IOException;
@@ -10,9 +12,9 @@ import java.net.*;
 public class GameClient extends Thread{
     private InetAddress ipAddress;
     private DatagramSocket socket;
-    private MainPageController game;
+    private Observable game;
 
-    public GameClient(MainPageController game, String ipAddress) {
+    public GameClient(Observable game, String ipAddress) {
         this.game = game;
         try{
             socket = new DatagramSocket();
@@ -34,7 +36,7 @@ public class GameClient extends Thread{
             } catch (IOException e){
                 e.printStackTrace();
             }
-            parsePacket(packet.getData(), packet.getAddress(), packet.getPort());
+            this.parsePacket(packet.getData(), packet.getAddress(), packet.getPort());
 
         }
     }
@@ -49,20 +51,43 @@ public class GameClient extends Thread{
                 break;
             case LOGIN:
                 packet = new Packet00Login(data);
-                System.out.println("[" + ipAddress.getHostAddress() + ":" + port + "]" + ((Packet00Login) packet).getUsername() + "has connected...");
                 Player player = new Player(((Packet00Login) packet).getUsername(), ipAddress,port);
-                game.addEntity(player);
+                handleLogin((Packet00Login) packet, ipAddress, port);
                 break;
             case DISCONNECT:
+                packet = new Packet01Disconnect(data);
+                System.out.println("[" + ipAddress.getHostAddress() + ":" + port + "] "
+                        + ((Packet01Disconnect) packet).getUsername() + " has left the world...");
+                game.removePlayer(((Packet01Disconnect) packet).getUsername());
+                break;
+            case TOWER:
+                packet = new Packet02Tower(data);
+                handleTower((Packet02Tower) packet);
                 break;
         }
     }
 
+    private void handleTower(Packet02Tower packet) {
+        ((GameController)game).createTower(new BasicTower(packet.getTowerX(),packet.getTowerY()));
+    }
+
     public void sendData(byte[] data){
+        DatagramPacket packet = new DatagramPacket(data, data.length, ipAddress, 1331);
         try {
-            DatagramPacket packet = new DatagramPacket(data, data.length, ipAddress, 1331);
-        } catch (Exception e){
+            socket.send(packet);
+        } catch (IOException e){
             e.printStackTrace();
         }
+    }
+
+    private void handleLogin(Packet00Login packet, InetAddress address, int port) {
+        System.out.println("[" + address.getHostAddress() + ":" + port + "] " + packet.getUsername()
+                + " has joined the game...");
+        Player player = new Player(packet.getUsername(), address, port);
+        game.addEntity(player);
+    }
+
+    public void setObservable(Observable c){
+        game = c;
     }
 }

@@ -1,6 +1,7 @@
 module com.ndonald.towergame {
     requires javafx.controls;
     requires javafx.fxml;
+    requires java.desktop;
 
 
     opens com.ndonald.towergame to javafx.fxml;
