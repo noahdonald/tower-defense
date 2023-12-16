@@ -3,7 +3,7 @@ package com.ndonald.towergame.net;
 public abstract class Packet {
 
     public static enum PacketTypes {
-        INVALID(-1), LOGIN(00), DISCONNECT(01), TOWER(02);
+        INVALID(-1), LOGIN(00), DISCONNECT(01), TOWER(02), START(03), CHAT(04), POINT(05);
 
         private final int packetId;
 

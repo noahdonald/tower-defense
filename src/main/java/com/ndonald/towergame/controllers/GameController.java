@@ -4,6 +4,7 @@ import com.ndonald.towergame.models.*;
 import com.ndonald.towergame.net.GameClient;
 import com.ndonald.towergame.net.GameServer;
 import com.ndonald.towergame.net.Packet02Tower;
+import com.ndonald.towergame.net.Packet04Chat;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.PathTransition;
@@ -11,14 +12,14 @@ import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.*;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import javafx.scene.shape.LineTo;
 import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
@@ -34,6 +35,8 @@ public class GameController extends Observable {
     public AnchorPane anchor;
     public Label scoreboard;
     public Label timerLabel;
+    public Button send;
+    public TextField chat;
     private double startDragX;
     private double startDragY;
     public ArrayList<BasicTower> towers;
@@ -44,7 +47,7 @@ public class GameController extends Observable {
     Arena arena;
     public Player player;
     Player opp;
-    GameServer socketServer;
+    public GameServer socketServer;
     public GameClient socketClient;
 
     private int towerDelay = 15;
@@ -268,5 +271,30 @@ public class GameController extends Observable {
 
     public ArrayList<BasicEnemy> getEnemies(){
         return enemies;
+    }
+
+
+    public void onSendClicked(MouseEvent mouseEvent) {
+        Packet04Chat packet = new Packet04Chat(chat.getText());
+        packet.writeData(socketClient);
+        chat.setText("");
+    }
+
+    public void displayChat(String chat) {
+        Platform.runLater(() -> {
+            Label msg = new Label(chat);
+            msg.setLayoutY(550);
+            msg.setPrefHeight(24);
+            msg.setPrefWidth(138);
+            msg.setStyle("-fx-text-fill: #ebdf75;");
+            anchor.getChildren().addAll(msg);
+            Timer chatTimer = new Timer();
+            chatTimer.schedule(
+                    new TimerTask() {
+                        public void run() {
+                            Platform.runLater(() -> msg.setVisible(false));
+                        }
+                    }, 3000);
+        });
     }
 }

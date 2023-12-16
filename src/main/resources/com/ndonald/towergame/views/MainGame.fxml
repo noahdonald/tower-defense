@@ -27,4 +27,6 @@
          <Font size="25.0" />
       </font>
    </Label>
+   <TextField fx:id="chat" layoutY="570.0" prefWidth="300" promptText="Chat" />
+   <Button fx:id="send" layoutX="250" layoutY="570.0" mnemonicParsing="false" onMouseClicked="#onSendClicked" text="Send" />
 </AnchorPane>

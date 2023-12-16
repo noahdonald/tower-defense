@@ -50,9 +50,9 @@ public class MainPageController extends Observable {
             }
             socketClient.start();
 
-            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("views/MainGame.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("views/LobbyPage.fxml"));
             AnchorPane pane = fxmlLoader.load();
-            GameController controller = fxmlLoader.<GameController>getController();
+            LobbyController controller = fxmlLoader.<LobbyController>getController();
             player = new Player(name.getText(),null,-1);
 
             Packet00Login loginPacket = new Packet00Login(player.getUsername());
@@ -64,7 +64,6 @@ public class MainPageController extends Observable {
             loginPacket.writeData(socketClient);
 
             controller.setPlayer(player);
-            player.setController(controller);
             controller.setClient(socketClient);
             socketClient.setObservable(controller);
             mainRoot.getChildren().setAll(pane);

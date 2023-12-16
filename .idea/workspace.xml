@@ -5,23 +5,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c93e81be-7b93-4fc2-978e-7d7f7969b13a" name="Changes" comment="server-client connections">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/ndonald/towergame/models/Observable.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/ndonald/towergame/net/Packet01Disconnect.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/ndonald/towergame/net/Packet02Tower.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/ndonald/towergame/controllers/LobbyController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/ndonald/towergame/models/LobbyTimer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/ndonald/towergame/net/Packet03Start.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/ndonald/towergame/net/Packet04Chat.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/ndonald/towergame/net/Packet05Point.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/com/ndonald/towergame/assets/td-gui/PNG/difficulty/table.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/com/ndonald/towergame/assets/td-gui/PNG/interface_game/button_start.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/com/ndonald/towergame/assets/td-gui/PNG/registration/table_1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/com/ndonald/towergame/views/LobbyPage.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/ndonald/towergame/controllers/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ndonald/towergame/controllers/GameController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/ndonald/towergame/controllers/MainPageController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ndonald/towergame/controllers/MainPageController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ndonald/towergame/controllers/SettingsPageController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ndonald/towergame/controllers/SettingsPageController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/ndonald/towergame/models/Arena.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ndonald/towergame/models/Arena.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ndonald/towergame/models/BasicEnemy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ndonald/towergame/models/BasicEnemy.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ndonald/towergame/models/BasicTower.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ndonald/towergame/models/BasicTower.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ndonald/towergame/models/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ndonald/towergame/models/Player.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/ndonald/towergame/net/GameClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ndonald/towergame/net/GameClient.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/ndonald/towergame/net/GameServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ndonald/towergame/net/GameServer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/ndonald/towergame/net/Packet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ndonald/towergame/net/Packet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ndonald/towergame/net/Packet00Login.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ndonald/towergame/net/Packet00Login.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/com/ndonald/towergame/views/MainGame.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/ndonald/towergame/views/MainGame.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/ndonald/towergame/views/UsernamePopup.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/ndonald/towergame/views/UsernamePopup.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -79,7 +80,7 @@
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/noahd/IdeaProjects/tower-defense&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/noahd/IdeaProjects/tower-defense/src/main/resources/com/ndonald/towergame/assets/td-gui/PNG/registration&quot;,
     &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
@@ -94,11 +95,11 @@
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/resources/com/ndonald/towergame/assets/td-gui/PNG/registration" />
+      <recent name="$PROJECT_DIR$/src/main/resources/com/ndonald/towergame/assets/td-gui/PNG/difficulty" />
+      <recent name="$PROJECT_DIR$/src/main/resources/com/ndonald/towergame/assets/td-gui/PNG/interface_game" />
       <recent name="$PROJECT_DIR$/src/main/resources/com/ndonald/towergame/assets/sprites/stone-tower-game-assets/PNG" />
       <recent name="$PROJECT_DIR$/src/main/resources/com/ndonald/towergame/assets/td-gui/PNG/menu" />
-      <recent name="$PROJECT_DIR$/src/main/resources/com/ndonald/towergame/assets/sprites" />
-      <recent name="$PROJECT_DIR$/src/main/resources/com/ndonald/towergame/assets" />
-      <recent name="$PROJECT_DIR$/src/main/resources/com/ndonald/towergame/assets/backgrounds/tower-defense-game-tile-set-pack-2/EPS" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/main/resources/com/ndonald/towergame/views" />
@@ -133,6 +134,7 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
+        <option value="jdk-21.0.1-openjdk-21.0.1-249ae16d76d6-29f91840" />
         <option value="jdk-21.0.1-openjdk-21.0.1-8336523bb0d9-cc9f59e6" />
       </set>
     </attachedChunks>

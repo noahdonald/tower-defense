@@ -6,24 +6,25 @@
 <?import javafx.scene.text.*?>
 
 <AnchorPane fx:id="mainRoot" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ndonald.towergame.controllers.MainPageController">
-   <ImageView fitHeight="600" fitWidth="1024" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0">
-      <Image url="@../assets/td-gui/PNG/failed/dark.png" />
-   </ImageView>
-   <ImageView fitHeight="313.0" fitWidth="613.0" layoutX="271.0" layoutY="144.0" pickOnBounds="true" preserveRatio="true">
-      <Image url="@../assets/td-gui/PNG/settings/table.png" />
-   </ImageView>
-   <TextField fx:id="name" layoutX="379.0" layoutY="194.0" prefHeight="43.0" prefWidth="266.0" promptText="Select Username" />
-   <Label layoutX="447.0" layoutY="370.0" onMouseClicked="#OnConfirmClick" text="Confirm" textFill="#ebdf75">
-      <font>
-         <Font name="Fira Code Regular" size="30.0" />
-      </font></Label>
-   <Label layoutX="349.0" layoutY="300.0" text="Game Server" textFill="#ebdf75">
-      <font>
-         <Font name="Fira Code Regular" size="25.0" />
-      </font>
-   </Label>
-   <ImageView fx:id="image" fitHeight="67.0" fitWidth="119.0" layoutX="526.0" layoutY="288.0" onMouseClicked="#OnServerButtonClick" pickOnBounds="true" preserveRatio="true">
-      <Image url="@../assets/td-gui/PNG/settings/button_off.png" />
-   </ImageView>
+<ImageView fitHeight="600" fitWidth="1024" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0">
+   <Image url="@../assets/td-gui/PNG/failed/dark.png" />
+</ImageView>
+<ImageView fitHeight="313.0" fitWidth="613.0" layoutX="271.0" layoutY="144.0" pickOnBounds="true" preserveRatio="true">
+   <Image url="@../assets/td-gui/PNG/settings/table.png" />
+</ImageView>
+<TextField fx:id="name" layoutX="379.0" layoutY="194.0" prefHeight="43.0" prefWidth="266.0" promptText="Select Username" />
+<Label layoutX="447.0" layoutY="370.0" onMouseClicked="#OnConfirmClick" text="Confirm" textFill="#ebdf75">
+   <font>
+      <Font name="Fira Code Regular" size="30.0" />
+   </font></Label>
+<Label layoutX="349.0" layoutY="300.0" text="Game Server" textFill="#ebdf75">
+   <font>
+      <Font name="Fira Code Regular" size="25.0" />
+   </font>
+</Label>
+<ImageView fx:id="image" fitHeight="67.0" fitWidth="119.0" layoutX="526.0" layoutY="288.0" onMouseClicked="#OnServerButtonClick" pickOnBounds="true" preserveRatio="true">
+   <Image url="@../assets/td-gui/PNG/settings/button_off.png" />
+</ImageView>
 
 </AnchorPane>
+

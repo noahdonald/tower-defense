@@ -1,6 +1,7 @@
 package com.ndonald.towergame.net;
 
 import com.ndonald.towergame.controllers.GameController;
+import com.ndonald.towergame.controllers.LobbyController;
 import com.ndonald.towergame.controllers.MainPageController;
 import com.ndonald.towergame.models.BasicTower;
 import com.ndonald.towergame.models.Observable;
@@ -36,12 +37,16 @@ public class GameClient extends Thread{
             } catch (IOException e){
                 e.printStackTrace();
             }
-            this.parsePacket(packet.getData(), packet.getAddress(), packet.getPort());
+            try {
+                this.parsePacket(packet.getData(), packet.getAddress(), packet.getPort());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
 
         }
     }
 
-    private void parsePacket(byte[] data, InetAddress ipAddress, int port){
+    private void parsePacket(byte[] data, InetAddress ipAddress, int port) throws IOException {
         String message = new String(data).trim();
         Packet.PacketTypes type = Packet.lookupPacket(Integer.parseInt(message.substring(0,2)));
         Packet packet = null;
@@ -64,7 +69,24 @@ public class GameClient extends Thread{
                 packet = new Packet02Tower(data);
                 handleTower((Packet02Tower) packet);
                 break;
+            case START:
+                ((LobbyController)game).startGame();
+                break;
+            case CHAT:
+                packet = new Packet04Chat(data);
+                handleChat((Packet04Chat)packet);
+                break;
+            case POINT:
+                try {
+                    ((GameController) game).points = Integer.parseInt(message.substring(2));
+                }
+                catch(ClassCastException e) { }
+                break;
         }
+    }
+
+    private void handleChat(Packet04Chat packet) {
+        ((GameController)game).displayChat(packet.getMsg());
     }
 
     private void handleTower(Packet02Tower packet) {

@@ -62,6 +62,16 @@ public class GameServer extends Thread{
                 packet = new Packet02Tower(data);
                 this.handleTower((Packet02Tower)packet);
                 break;
+            case START:
+                packet = new Packet03Start(data);
+                sendDataToAllClients(data);
+                break;
+            case CHAT:
+                packet = new Packet04Chat(data);
+                sendDataToAllClients(data);
+                break;
+            case POINT:
+                break;
         }
     }
 
@@ -136,5 +146,9 @@ public class GameServer extends Thread{
 
     public void setObservable(Observable c){
         game = c;
+    }
+
+    public List<Player> getConnectedPlayers(){
+        return connectedPlayers;
     }
 }
